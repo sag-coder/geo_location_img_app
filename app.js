@@ -16,7 +16,7 @@ geoapp();
 // tile.addTo(mymap);
 
 // }
-let mymap = L.map('mapid').setView([0, 0], 5);
+let mymap = L.map('mapid').setView([0, 0], 0);
 let marker = L.marker([0, 0]).addTo(mymap);
 let attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
@@ -29,9 +29,9 @@ tile.addTo(mymap);
 
 function geoapp() {
     navigator.geolocation.getCurrentPosition(async response => {
-        let latitude = response.coords.latitude;
-        let longitude = response.coords.longitude;
-        await mymap.setView([latitude, longitude], 12);
+        let latitude = response.coords.latitude;  //26.724737 
+        let longitude =  response.coords.longitude;  //88.435052
+        await mymap.setView([latitude, longitude], 10);
 
         await marker.setLatLng([latitude, longitude]);
 
@@ -41,16 +41,19 @@ function geoapp() {
         let geoData = await fetch(geoUrl);
         let geoJson = await geoData.json();
 
-        //console.log(geoJson)
+        console.log(geoJson)
 
-        let city = geoJson['results'][0]['components']['town']
+        let city = geoJson['results'][0]["formatted"].split(',')[0];
         let state = geoJson['results'][0]['components']['state']
         let country = geoJson['results'][0]['components']['country']
         let continent = geoJson['results'][0]['components']['continent']
 
         document.getElementById("address").innerHTML = `<h1>${city}</h1>
         <h4 >${state}</h4>
-        <h5>${country} , ${continent}</h5>`
+        <h5>${country} , ${continent}</h5>
+        <p>Latitude : ${latitude.toFixed(2)} &deg <br>
+            Longitude : ${longitude.toFixed(2)} &deg
+            </P>`
 
         console.log(city, state, country, continent)
 
