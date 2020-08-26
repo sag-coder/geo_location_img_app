@@ -16,7 +16,7 @@ geoapp();
 // tile.addTo(mymap);
 
 // }
-let mymap = L.map('mapid').setView([0, 0], 0);
+let mymap = L.map('mapid').setView([0, 0], 1);
 let marker = L.marker([0, 0]).addTo(mymap);
 let attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
@@ -35,18 +35,33 @@ function geoapp() {
 
         await marker.setLatLng([latitude, longitude]);
 
-        console.log(longitude, latitude)
+        //console.log(longitude, latitude)
 
         let geoUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=d20be08ae18c4ea1810516d669f17c0d`
         let geoData = await fetch(geoUrl);
         let geoJson = await geoData.json();
 
-        console.log(geoJson)
+        //console.log(geoJson)
 
-        let city = geoJson['results'][0]["formatted"].split(',')[0];
-        let state = geoJson['results'][0]['components']['state']
-        let country = geoJson['results'][0]['components']['country']
-        let continent = geoJson['results'][0]['components']['continent']
+        // let city = geoJson['results'][0]['components']['city'];
+        let city;
+        if(geoJson['results'][0]['components']['city']==String){
+            city = geoJson['results'][0]['components']['city'];
+            console.log("city")
+        }
+        else if(geoJson['results'][0]['components']['town']==String){
+            city = geoJson['results'][0]['components']['town'];
+            console.log("town")
+        }
+        
+        else{
+             city = geoJson['results'][0]['components']['village'];
+             console.log("village")
+        }
+
+        let state = geoJson['results'][0]['components']['state'];
+        let country = geoJson['results'][0]['components']['country'];
+        let continent = geoJson['results'][0]['components']['continent'];
 
         document.getElementById("address").innerHTML = `<h1>${city}</h1>
         <h4 >${state}</h4>
