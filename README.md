@@ -1,6 +1,6 @@
 Geolocation Images
 
-Click the given link to view images -->    https://sag-coder.github.io/geo_location_img_app/
+Click the given link to view images -->    https://sag-coder.github.io/geo_location_img_app/.
 
 
 
