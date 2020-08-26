@@ -35,7 +35,7 @@ function geoapp() {
 
         await marker.setLatLng([latitude, longitude]);
 
-        //console.log(longitude, latitude)
+        console.log(latitude,longitude)
 
         let geoUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=d20be08ae18c4ea1810516d669f17c0d`
         let geoData = await fetch(geoUrl);
